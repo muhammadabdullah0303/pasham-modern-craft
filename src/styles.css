@@ -19,6 +19,8 @@
  */
 
 @theme inline {
+  --font-sans: "Manrope", sans-serif;
+  --font-display: "Cormorant Garamond", serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -62,26 +64,26 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.25rem;
+  --background: oklch(0.945 0.018 75);
+  --foreground: oklch(0.27 0.035 45);
+  --card: oklch(0.965 0.012 75);
+  --card-foreground: oklch(0.27 0.035 45);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --primary: oklch(0.47 0.055 37);
+  --primary-foreground: oklch(0.97 0.015 78);
+  --secondary: oklch(0.89 0.025 70);
+  --secondary-foreground: oklch(0.27 0.035 45);
+  --muted: oklch(0.91 0.018 72);
+  --muted-foreground: oklch(0.49 0.025 50);
+  --accent: oklch(0.65 0.055 42);
+  --accent-foreground: oklch(0.97 0.015 78);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.79 0.026 67);
+  --input: oklch(0.79 0.026 67);
+  --ring: oklch(0.47 0.055 37);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +142,18 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+    margin: 0;
   }
+  h1, h2, h3, h4 { font-family: var(--font-display); }
+  ::selection { background: var(--color-secondary); color: var(--color-foreground); }
 }
+
+@utility section-shell { width: 100%; max-width: 82rem; margin-inline: auto; padding-inline: 1.25rem; }
+@utility editorial-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
+@utility image-reveal { overflow: hidden; }
+@utility image-lift { transition: transform 700ms cubic-bezier(.2,.7,.2,1); &:hover { transform: scale(1.035); } }
+
+html { scroll-behavior: smooth; }
+body { overflow-x: hidden; }
