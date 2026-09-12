@@ -1,24 +1,31 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ChevronLeft, ChevronRight, Feather, Scissors, Gem } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Page, ProductCard, products, imagery } from "@/components/storefront";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({ meta: [{ title: "Wadiy-E-Pasham | Luxury Men's Shawls" }, { name: "description", content: "Discover premium Kashmiri, Pashmina and wool shawls for the modern gentleman." }, { property: "og:title", content: "Wadiy-E-Pasham | Luxury Men's Shawls" }, { property: "og:description", content: "Timeless shawls shaped by heritage craftsmanship." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+const collections = [
+  { name: "Kashmiri", image: imagery.craft, pos: "object-center" },
+  { name: "Pashmina", image: imagery.hero, pos: "object-[70%_center]" },
+  { name: "Wool", image: imagery.textiles, pos: "object-left" },
+];
+
+function Home() { return <Page>
+  <section className="relative min-h-[620px] h-[calc(100svh-74px)] max-h-[850px] overflow-hidden">
+    <img src={imagery.hero} alt="Gentleman wearing an ivory pashmina in the mountains" width={1920} height={1200} className="absolute inset-0 h-full w-full object-cover object-[62%_center]" />
+    <div className="absolute inset-0 bg-gradient-to-r from-foreground/45 via-transparent to-transparent" />
+    <div className="section-shell relative flex h-full items-center"><div className="max-w-lg text-primary-foreground"><p className="editorial-label">Luxury Shawls & Stoles</p><h1 className="mt-4 text-6xl font-medium leading-[0.88] sm:text-8xl">Timeless<br/>Tradition</h1><p className="mt-6 max-w-sm text-sm leading-6">Luxury shawls for the modern gentleman.</p><Button size="lg" className="mt-8" asChild><Link to="/shop">Shop Shawls</Link></Button></div></div>
+  </section>
+  <section className="section-shell py-24 sm:py-32"><div className="text-center"><h2 className="text-4xl sm:text-5xl">The Collection</h2><p className="mt-2 text-sm text-muted-foreground">Shawls made for every occasion.</p></div><div className="mt-12 grid gap-5 md:grid-cols-3">{collections.map(c=><Link key={c.name} to="/shop" className="group image-reveal relative aspect-[4/5]"><img src={c.image} alt={`${c.name} shawl collection`} loading="lazy" width={800} height={1000} className={`image-lift h-full w-full object-cover ${c.pos}`}/><div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-transparent to-transparent"/><div className="absolute bottom-0 p-7 text-primary-foreground"><h3 className="text-3xl uppercase">{c.name}</h3><span className="mt-2 inline-flex items-center gap-2 text-xs">View Collection <Arrow/></span></div></Link>)}</div></section>
+  <section className="border-y border-border bg-card py-24 sm:py-32"><div className="section-shell"><div className="text-center"><h2 className="text-4xl sm:text-5xl">Best Sellers</h2><p className="mt-2 text-sm text-muted-foreground">Our most loved shawls.</p></div><div className="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4 lg:gap-6">{products.slice(0,4).map((p,i)=><ProductCard key={p.name} product={p} index={i}/>)}</div></div></section>
+  <section className="grid lg:grid-cols-2"><div className="min-h-[520px]"><img src={imagery.craft} alt="Artisan weaving a fine Kashmiri shawl" loading="lazy" width={1408} height={1200} className="h-full w-full object-cover"/></div><div className="flex items-center bg-secondary px-7 py-20 sm:px-16 lg:px-24"><div className="max-w-lg"><p className="editorial-label text-primary">Our Heritage</p><h2 className="mt-4 text-5xl sm:text-6xl">Crafted with Purpose</h2><p className="mt-6 text-sm leading-7 text-muted-foreground">From traditional craftsmanship to modern wardrobes, our shawls are a celebration of culture, quality and timeless style.</p><Button variant="outline" size="lg" className="mt-8" asChild><Link to="/about">Our Story <Arrow/></Link></Button></div></div></section>
+  <section className="relative min-h-[650px]"><img src={imagery.editorial} alt="South Asian gentleman wearing a heritage shawl" loading="lazy" width={1200} height={1504} className="absolute inset-0 h-full w-full object-cover object-[center_30%]"/><div className="absolute inset-0 bg-foreground/30"/><div className="section-shell relative flex min-h-[650px] items-end pb-20"><div className="text-primary-foreground"><p className="editorial-label">The Wadiy Edit</p><h2 className="mt-3 text-5xl uppercase leading-none sm:text-7xl">Made for the moments<br/>that matter</h2><Button size="lg" className="mt-7" asChild><Link to="/shop">Explore Style <Arrow/></Link></Button></div></div></section>
+  <section className="section-shell grid gap-12 py-24 text-center md:grid-cols-3 sm:py-28">{[[Feather,"Premium Fabric","Only the finest materials"],[Scissors,"Expert Craftsmanship","Handcrafted with care"],[Gem,"Timeless Style","For every occasion"]].map(([Icon,t,s])=><div key={String(t)}><Icon className="mx-auto text-primary" strokeWidth={1}/><h3 className="mt-5 text-xl">{String(t)}</h3><p className="mt-1 text-xs text-muted-foreground">{String(s)}</p></div>)}</section>
+  <section className="bg-secondary py-24 text-center sm:py-32"><div className="section-shell max-w-4xl"><p className="editorial-label text-primary">What our customers say</p><blockquote className="mt-8 font-display text-4xl leading-tight sm:text-6xl">“The quality, finish and elegance of the shawl exceeded my expectations.”</blockquote><p className="mt-7 text-primary">★★★★★</p><p className="mt-2 editorial-label">Ahmed K.</p><div className="mt-8 flex justify-center gap-2"><Button variant="outline" size="icon" aria-label="Previous review"><ChevronLeft/></Button><Button variant="outline" size="icon" aria-label="Next review"><ChevronRight/></Button></div></div></section>
+  <section className="py-24"><div className="section-shell text-center"><h2 className="text-4xl sm:text-5xl">Follow the Journey</h2><p className="mt-2 text-sm text-muted-foreground">@wadiyepasham</p></div><div className="mt-10 grid grid-cols-2 md:grid-cols-6">{[imagery.editorial,imagery.craft,imagery.textiles,imagery.hero,imagery.craft,imagery.editorial].map((x,i)=><img key={i} src={x} alt="Wadiy-E-Pasham journal" loading="lazy" width={500} height={500} className="aspect-square w-full object-cover"/>)}</div></section>
+  </Page> }
+function Arrow(){return <ArrowRight className="size-3"/>}
